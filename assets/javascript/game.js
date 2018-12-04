@@ -1,36 +1,80 @@
-let nounChoice = ["person", "place", "thing"];
-let randomNounChoice = nounChoice[Math.floor(Math.random() * nounChoice.length)];
-let nounObject;
+let carMakes = ["audi", "bmw", "mercedes", "lamborghini", "ferarri", "jeep", "kia"];
+let pressedKey, blanks;
+let attempts = 7;
 
-wordsList = {
-    "person": ["Bruce Lee", "Jesus", "Albert Einstein", "Marilyn Monroe", "Bil Gates"],
-    "place": ["Statue of Liberty", "Eiffel Tower", "Big Ben", "Leaning Tower of Pisa", "Empire State Building"],
-    "thing": ["Table", "Chair", "Computer", "Water Bottle", "Paper"]
+function selectCarMake() {
+  return carMakes[Math.floor(Math.random() * carMakes.length)];
 }
 
-function selectWord() {
-    let selectedWord = wordsList[randomNounChoice][Math.floor(Math.random() * wordsList[randomNounChoice].length)];
-    return selectedWord
+function determinedSpaces(carMake) {
+  var wordSpaces = "_";
+  var spacesCount = carMake.length;
+  return wordSpaces.repeat(spacesCount);
 }
 
-function showTheSpaces(selectedWord) {
-    selectedWord = selectedWord.split(" ");
-    let wordSpacesArray = [];
-
-    selectedWord.forEach(function(word) {
-        let wordSpaces = " _ ";
-        let spacesCount = word.length;
-
-        wordSpaces =  wordSpaces.repeat(spacesCount);
-        console.log(wordSpaces);
-        wordSpacesArray.push(wordSpaces);
-
-    });
-    return wordSpacesArray;
+function addLetter(letter, guessedKey) {
+  blanks = blanks.split("");
+  blanks[letter] = guessedKey;
+  blanks = blanks.join("");
+  guessWord.textContent = blanks;
 }
 
-var mainGame = document.getElementById('main-game');
-var newDiv = document.createElement('div');
+function checkIfWon() {
+  if (!blanks.includes("_")) {
+    console.log('you have won');
+    return true
+  } else {
+    return false
 
-newDiv.textContent =  selectWord();
-mainGame.appendChild(newDiv);
+  }
+}
+
+function addAttempt() {
+  attempts--
+  if (attempts == 0) {
+    console.log('you lost');
+  }
+}
+
+var selectedCarMake = selectCarMake();
+blanks = determinedSpaces(selectedCarMake);
+
+// displays to UI blank spaces
+var guessWord = document.getElementById('guess-word');
+guessWord.textContent = blanks;
+
+
+// determine user input
+document.onkeyup = function (event) {
+  pressedKey = event.key;
+  // keystroke is 1 start game
+
+
+  // keystroke is 2 restart or reset game
+
+  if (selectedCarMake.includes(pressedKey) && attempts > 0 && !checkIfWon()){
+
+    for (var letter = 0; letter < selectedCarMake.length; letter++) {
+      if (pressedKey == selectedCarMake[letter]) {
+        addLetter(letter, pressedKey);
+        checkIfWon();
+      }
+    }
+
+  } else {
+    addAttempt(pressedKey);
+  }
+}
+
+
+
+
+
+
+
+
+// var para = document.createElement("p");
+// var node = document.createTextNode("This is new.");
+// para.appendChild(node);
+// var element = document.getElementById("div1");
+// element.appendChild(para);
