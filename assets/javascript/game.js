@@ -1,6 +1,7 @@
 let carMakes = ["audi", "bmw", "mercedes", "lamborghini", "ferarri", "jeep", "kia"];
 let pressedKey, blanks;
 let attempts = 7;
+let pressedKeyList = [];
 
 function selectCarMake() {
   return carMakes[Math.floor(Math.random() * carMakes.length)];
@@ -21,6 +22,7 @@ function addLetter(letter, guessedKey) {
 
 function checkIfWon() {
   if (!blanks.includes("_")) {
+    attempts = 0;
     console.log('you have won');
     return true
   } else {
@@ -29,11 +31,24 @@ function checkIfWon() {
   }
 }
 
-function addAttempt() {
+function addAttempt(pressedKey) {
+  var attemptsLeft = document.getElementById('attempts-left');
+  var incorrectLetter = document.getElementById('letters-used');
+
   attempts--
+
+  if (attempts >= 0) {
+  attemptsLeft.textContent = attempts;
+
+  pressedKeyList.push(pressedKey);
+  incorrectLetter.textContent = pressedKeyList.join("");
+  }
+
   if (attempts == 0) {
     console.log('you lost');
   }
+
+  
 }
 
 var selectedCarMake = selectCarMake();
@@ -51,20 +66,23 @@ document.onkeyup = function (event) {
 
 
   // keystroke is 2 restart or reset game
+  if (event.keyCode >= 65 && event.keyCode <= 90) {
+    if (selectedCarMake.includes(pressedKey) && attempts > 0 && !checkIfWon()){
 
-  if (selectedCarMake.includes(pressedKey) && attempts > 0 && !checkIfWon()){
-
-    for (var letter = 0; letter < selectedCarMake.length; letter++) {
-      if (pressedKey == selectedCarMake[letter]) {
-        addLetter(letter, pressedKey);
-        checkIfWon();
+      for (var letter = 0; letter < selectedCarMake.length; letter++) {
+        if (pressedKey == selectedCarMake[letter]) {
+          addLetter(letter, pressedKey);
+          checkIfWon();
+        }
       }
-    }
 
-  } else {
-    addAttempt(pressedKey);
+    } else {
+      addAttempt(pressedKey);
+    }
   }
+  
 }
+
 
 
 
