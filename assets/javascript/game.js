@@ -76,6 +76,9 @@ function addLetter(letter, guessedKey) {
 function addAttempt(pressedKey) {
   if (attempts >= 0) {
     if (!pressedKeyList.includes(pressedKey)) {
+      var audio = new Audio('assets/sounds/wrong-letter.mp3');
+      audio.play();
+
       attempts--
       pressedKeyList.push(pressedKey);
       incorrectLetter.textContent = pressedKeyList.join("");
@@ -140,6 +143,9 @@ welcome.textContent = "Press Any Key To Begin Playing";
 document.onkeyup = function (event) {
   pressedKey = event.key;
   if (pressedKey){
+    var audio = new Audio('assets/sounds/start-game.mp3');
+    audio.play();
+
     welcome.textContent = "";
     startGame();
   }
