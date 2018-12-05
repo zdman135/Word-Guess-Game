@@ -3,6 +3,12 @@ html, body {
   background-image: url("../images/car-bg.jpg");
   background-position: 50% 50%;
   background-repeat: repeat;
+
+  font-family: 'Acme', sans-serif;
+}
+
+.title {
+  background-color: #E8EBEE;
 }
 
 .center-box {
@@ -10,6 +16,13 @@ html, body {
     justify-content: center;
 }
 
+#welcome {
+  font-size: 2.5rem;
+}
+
+#question{
+  font-size: 1.5rem;
+}
 
 #guess-word {
     font-size: 6rem;
@@ -19,4 +32,16 @@ html, body {
 #letters-used {
   font-size: 2rem;
   letter-spacing: 1.5rem;
+}
+
+.blinking{
+  animation:blinkingText 2s infinite;
+  opacity: 1;
+}
+@keyframes blinkingText{
+  0%{     color: #000;    }
+  49%{    color: transparent; }
+  50%{    color: transparent; }
+  99%{    color:transparent;  }
+  100%{   color: #000;    }
 }

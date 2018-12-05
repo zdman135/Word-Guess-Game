@@ -4,6 +4,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Word Guess Game</title>
+    <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -13,21 +14,22 @@
 
     <div class="container">
       <div class="header center-box header-box">
-        <h1 class="text-muted bg-dark">Car Brand Guess Game</h3>
+        <h1 class="title">Car Brand Guess Game</h3>
       </div>
 
-      <div class="jumbotron">
+      <div class="jumbotron center-box">
         <div class="container">
           
           <div class="row">  
             <div class="col-lg-12">
-              <p></p>
-            </div>12
+              <p id="welcome" class="center-box blinking"></p>
+              <p id="question" class="center-box">What brand is this?</p>
+            </div>
           </div>
 
           <div class="row">
             <div class="col-lg-12 center-box">
-              <p id="guess-word">
+              <p id="guess-word" class="center-box">
               </p>
             </div>
           </div>
@@ -35,18 +37,11 @@
           <div class="row info">
             <div class="col-lg-6">
               <p id="attempts-left"></p>
+              <p id="wins"></p>
+              <p id="losses"></p>
             </div>
             <div class="col-lg-6">
               <p id="letters-used"></p>
-            </div>      
-          </div>
-
-          <div class="row win-lose">
-            <div class="col-lg-6">
-              <p id="wins"></p>
-            </div>
-            <div class="col-lg-6">
-              <p id="losses"></p>
             </div>      
           </div>
     

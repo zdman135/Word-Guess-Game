@@ -1,11 +1,11 @@
-let pressedKey, blanks, guessWord, selectedCarMake, incorrectLetter, attemptsLeft;
+let pressedKey, blanks, guessWord, selectedCarMake, incorrectLetter, attemptsLeft, welcome;
 let attempts = 5;
 let losses = 0;
 let wins = 0;
 let pressedKeyList = [];
 
 function selectCarMake() {
-  var carMakes = ["audi", "bmw", "mercedes"];
+  var carMakes = ["audi", "bmw", "mercedes", "lexus", "acura", "ferrari", "lamborghini"];
   return carMakes[Math.floor(Math.random() * carMakes.length)];
 }
 
@@ -26,13 +26,13 @@ function checkIfWon() {
 function addToLoss() {
   losses++
   var lossNumber = document.getElementById('losses');
-  lossNumber.textContent = losses;
+  lossNumber.textContent = "Losses: " + losses;
 }
 
 function addToWin() {
   wins++
   var winNumber = document.getElementById('wins');
-  winNumber.textContent = wins;
+  winNumber.textContent = "Wins: " + wins;
 }
 
 function resetGuessedLetters() {
@@ -42,7 +42,7 @@ function resetGuessedLetters() {
 
 function resetAttempts() {
   attempts = 5;
-  attemptsLeft.textContent = attempts;
+  attemptsLeft.textContent = "Attempts Remaining: " + attempts;
 }
 
 function addLetter(letter, guessedKey) {
@@ -55,6 +55,7 @@ function addLetter(letter, guessedKey) {
     addToWin();
     resetGuessedLetters();
     resetAttempts();
+    displayBrand(blanks);
     startGame();    
   }
 }
@@ -65,7 +66,7 @@ function addAttempt(pressedKey) {
       attempts--
       pressedKeyList.push(pressedKey);
       incorrectLetter.textContent = pressedKeyList.join("");
-      attemptsLeft.textContent = attempts;
+      attemptsLeft.textContent = "Attempts Remaining: " + attempts;
     }
   }
 
@@ -78,7 +79,7 @@ function addAttempt(pressedKey) {
 }
 
 function displayGame() {
-  attempts = 7;
+  attempts = 5;
 
   selectedCarMake = selectCarMake();
   blanks = determinedSpaces(selectedCarMake);
@@ -88,7 +89,7 @@ function displayGame() {
   attemptsLeft = document.getElementById('attempts-left');
   
   guessWord.textContent = blanks;
-  attemptsLeft.textContent = attempts;
+  attemptsLeft.textContent = "Attempts Remaining: " + attempts;
 }
 
 function userGuess(guess) {
@@ -118,9 +119,13 @@ function startGame() {
   }
 }
 
+welcome = document.getElementById('welcome');
+welcome.textContent = "Press Any Key To Begin Playing";
+
 document.onkeyup = function (event) {
   pressedKey = event.key;
   if (pressedKey){
+    welcome.textContent = "";
     startGame();
   }
 }
