@@ -27,12 +27,16 @@ function addToLoss() {
   losses++
   var lossNumber = document.getElementById('losses');
   lossNumber.textContent = "Losses: " + losses;
+  var audio = new Audio('assets/sounds/lose.mp3');
+  audio.play();
 }
 
 function addToWin() {
   wins++
   var winNumber = document.getElementById('wins');
   winNumber.textContent = "Wins: " + wins;
+  var audio = new Audio('assets/sounds/win.mp3');
+  audio.play();
 }
 
 function resetGuessedLetters() {
@@ -45,6 +49,16 @@ function resetAttempts() {
   attemptsLeft.textContent = "Attempts Remaining: " + attempts;
 }
 
+function displayWinBrand() {
+  var winLogo = document.getElementById("last-win");
+  var img = document.createElement("img");
+    img.src = src;
+    img.width = width;
+    img.height = height;
+    img.alt = alt;
+  winLogo.appendChild(img)
+}
+
 function addLetter(letter, guessedKey) {
   blanks = blanks.split("");
   blanks[letter] = guessedKey;
@@ -55,7 +69,6 @@ function addLetter(letter, guessedKey) {
     addToWin();
     resetGuessedLetters();
     resetAttempts();
-    displayBrand(blanks);
     startGame();    
   }
 }
@@ -87,9 +100,11 @@ function displayGame() {
   incorrectLetter = document.getElementById('letters-used');
   guessWord = document.getElementById('guess-word');
   attemptsLeft = document.getElementById('attempts-left');
-  
+  var question = document.getElementById('question');
+
   guessWord.textContent = blanks;
   attemptsLeft.textContent = "Attempts Remaining: " + attempts;
+  question.textContent = "Can you guess the car brand?"
 }
 
 function userGuess(guess) {
