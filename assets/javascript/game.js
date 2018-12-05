@@ -1,9 +1,11 @@
-let carMakes = ["audi", "bmw", "mercedes", "lamborghini", "ferarri", "jeep", "kia"];
-let pressedKey, blanks;
-let attempts = 7;
+let pressedKey, blanks, guessWord, selectedCarMake, incorrectLetter, attemptsLeft;
+let attempts = 5;
+let losses = 0;
+let wins = 0;
 let pressedKeyList = [];
 
 function selectCarMake() {
+  var carMakes = ["audi", "bmw", "mercedes"];
   return carMakes[Math.floor(Math.random() * carMakes.length)];
 }
 
@@ -13,86 +15,112 @@ function determinedSpaces(carMake) {
   return wordSpaces.repeat(spacesCount);
 }
 
+function checkIfWon() {
+  if (!blanks.includes("_")) {
+    return true
+  } else {
+    return false
+  }
+}
+
+function addToLoss() {
+  losses++
+  var lossNumber = document.getElementById('losses');
+  lossNumber.textContent = losses;
+}
+
+function addToWin() {
+  wins++
+  var winNumber = document.getElementById('wins');
+  winNumber.textContent = wins;
+}
+
+function resetGuessedLetters() {
+  pressedKeyList = [];
+  incorrectLetter.textContent = pressedKeyList;
+}
+
+function resetAttempts() {
+  attempts = 5;
+  attemptsLeft.textContent = attempts;
+}
+
 function addLetter(letter, guessedKey) {
   blanks = blanks.split("");
   blanks[letter] = guessedKey;
   blanks = blanks.join("");
   guessWord.textContent = blanks;
-}
 
-function checkIfWon() {
-  if (!blanks.includes("_")) {
-    attempts = 0;
-    console.log('you have won');
-    return true
-  } else {
-    return false
-
+  if(checkIfWon()) {
+    addToWin();
+    resetGuessedLetters();
+    resetAttempts();
+    startGame();    
   }
 }
 
 function addAttempt(pressedKey) {
-  var attemptsLeft = document.getElementById('attempts-left');
-  var incorrectLetter = document.getElementById('letters-used');
-
-  attempts--
-
   if (attempts >= 0) {
-  attemptsLeft.textContent = attempts;
-
-  pressedKeyList.push(pressedKey);
-  incorrectLetter.textContent = pressedKeyList.join("");
+    if (!pressedKeyList.includes(pressedKey)) {
+      attempts--
+      pressedKeyList.push(pressedKey);
+      incorrectLetter.textContent = pressedKeyList.join("");
+      attemptsLeft.textContent = attempts;
+    }
   }
 
   if (attempts == 0) {
-    console.log('you lost');
+    addToLoss();
+    resetGuessedLetters();
+    resetAttempts();
+    startGame();
   }
-
-  
 }
 
-var selectedCarMake = selectCarMake();
-blanks = determinedSpaces(selectedCarMake);
+function displayGame() {
+  attempts = 7;
 
-// displays to UI blank spaces
-var guessWord = document.getElementById('guess-word');
-guessWord.textContent = blanks;
+  selectedCarMake = selectCarMake();
+  blanks = determinedSpaces(selectedCarMake);
 
+  incorrectLetter = document.getElementById('letters-used');
+  guessWord = document.getElementById('guess-word');
+  attemptsLeft = document.getElementById('attempts-left');
+  
+  guessWord.textContent = blanks;
+  attemptsLeft.textContent = attempts;
+}
 
-// determine user input
-document.onkeyup = function (event) {
-  pressedKey = event.key;
-  // keystroke is 1 start game
-
-
-  // keystroke is 2 restart or reset game
-  if (event.keyCode >= 65 && event.keyCode <= 90) {
-    if (selectedCarMake.includes(pressedKey) && attempts > 0 && !checkIfWon()){
+function userGuess(guess) {
+  if (guess.keyCode >= 65 && guess.keyCode <= 90) {
+    if(selectedCarMake.includes(guess.key)) {
 
       for (var letter = 0; letter < selectedCarMake.length; letter++) {
-        if (pressedKey == selectedCarMake[letter]) {
-          addLetter(letter, pressedKey);
-          checkIfWon();
-        }
+        if (guess.key == selectedCarMake[letter]) {
+          addLetter(letter, guess.key);
+        } 
       }
 
     } else {
-      addAttempt(pressedKey);
+      addAttempt(guess.key);
     }
+
+  } else {
+    // tell user to only use alphabet characters
   }
-  
 }
 
+function startGame() {
+  displayGame();
 
+  document.onkeyup = function (keyPress) {
+    userGuess(keyPress);
+  }
+}
 
-
-
-
-
-
-
-// var para = document.createElement("p");
-// var node = document.createTextNode("This is new.");
-// para.appendChild(node);
-// var element = document.getElementById("div1");
-// element.appendChild(para);
+document.onkeyup = function (event) {
+  pressedKey = event.key;
+  if (pressedKey){
+    startGame();
+  }
+}

@@ -1,3 +1,10 @@
+html, body {
+  height: 100%;
+  background-image: url("../images/car-bg.jpg");
+  background-position: 50% 50%;
+  background-repeat: repeat;
+}
+
 .center-box {
     display: flex;
     justify-content: center;
