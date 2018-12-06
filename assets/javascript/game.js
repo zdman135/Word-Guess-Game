@@ -168,7 +168,8 @@ function userGuess(guess) {
     }
 
   } else {
-    // tell user to only use alphabet characters
+    // maybe add code here to tell user to only use alphabet characters
+    // but not necessary
   }
 }
 
