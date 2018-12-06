@@ -1,4 +1,6 @@
-let pressedKey, blanks, guessWord, selectedCarMake, incorrectLetter, attemptsLeft, welcome, lettersUsedTitle;
+let pressedKey, blanks, guessWord, selectedCarMake, incorrectLetter, attemptsLeft, welcome, lettersUsedTitle, resetGame,
+lossNumber, winNumber;
+
 let attempts = 5;
 let losses = 0;
 let wins = 0;
@@ -54,7 +56,7 @@ function checkIfWon() {
 
 function addToLoss() {
   losses++
-  var lossNumber = document.getElementById('losses');
+  lossNumber = document.getElementById('losses');
   lossNumber.textContent = "Losses: " + losses;
   var audio = new Audio('assets/sounds/lose.mp3');
   audio.play();
@@ -62,10 +64,29 @@ function addToLoss() {
 
 function addToWin() {
   wins++
-  var winNumber = document.getElementById('wins');
+  winNumber = document.getElementById('wins');
   winNumber.textContent = "Wins: " + wins;
   var audio = new Audio('assets/sounds/win.mp3');
   audio.play();
+}
+
+function resetWinsAndLosses() {
+  wins = 0;
+  losses = 0;
+  winNumber = document.getElementById('wins');
+  lossNumber = document.getElementById('losses');
+  lossNumber.textContent = "Losses: " + losses;
+  winNumber.textContent = "Wins: " + wins;
+
+  var audio = new Audio('assets/sounds/reset.mp3');
+  audio.play();
+}
+
+function reset() {
+  resetWinsAndLosses();
+  resetGuessedLetters();
+  resetAttempts();
+  startGame();
 }
 
 function resetGuessedLetters() {
@@ -136,8 +157,6 @@ function addAttempt(pressedKey) {
 }
 
 function displayGame() {
-  attempts = 5;
-
   selectedCarMake = selectCarMake();
   blanks = determinedSpaces(selectedCarMake.make);
 
@@ -146,6 +165,16 @@ function displayGame() {
   guessWord = document.getElementById('guess-word');
   attemptsLeft = document.getElementById('attempts-left');
   var question = document.getElementById('question');
+  infoDiv = document.getElementById('info-div');
+
+  if(!resetGame) {
+    resetGame = document.createElement("button");
+    resetGame.textContent = "Reset Game"
+    resetGame.setAttribute("class", "button btn btn-secondary");
+    resetGame.setAttribute("onclick", "reset()");
+
+    infoDiv.appendChild(resetGame);
+  }
 
   guessWord.textContent = blanks;
   attemptsLeft.textContent = "Attempts Remaining: " + attempts;
