@@ -16,6 +16,11 @@ html, body {
     justify-content: center;
 }
 
+.center-info {
+  display: flex;
+  justify-content: space-between;
+}
+
 #welcome {
   font-size: 2.5rem;
 }
@@ -45,4 +50,8 @@ html, body {
   50%{    color: transparent; }
   99%{    color:transparent;  }
   100%{   color: #000;    }
+}
+
+.info {
+  font-size: 1.5rem;
 }
