@@ -9,6 +9,15 @@ html, body {
 
 .title {
   background-color: #E8EBEE;
+  padding-top: 5px;
+  padding-right: 15px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  border-radius: 1rem;
+}
+
+.jumbotron {
+  border-radius: 1rem;
 }
 
 .center-box {
